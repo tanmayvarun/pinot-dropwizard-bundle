@@ -8,6 +8,27 @@
     <artifactId>pinotdao-bundle</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>tanmayvarun</id>
+            <name>Tanmay Varun</name>
+            <email>varuntanmay21@gmail.com</email>
+            <roles>
+                <role>owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <dropwizard.version>2.0.28</dropwizard.version>
         <guava.version>29.0-jre</guava.version>
