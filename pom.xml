@@ -43,7 +43,7 @@
     <properties>
         <dropwizard.version>2.0.28</dropwizard.version>
         <guava.version>29.0-jre</guava.version>
-        <okhttp.version>4.11.0-PPE</okhttp.version>
+        <okhttp.version>4.10.0</okhttp.version>
         <kafka.version>2.3.0</kafka.version>
         <jsonpath.version>2.7.0</jsonpath.version>
         <mockito.version>4.6.1</mockito.version>
