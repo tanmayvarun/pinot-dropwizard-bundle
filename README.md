@@ -208,3 +208,12 @@ public class App extends Application<AppConfig> {
 
 }
 ````
+
+## Usage
+````
+<dependency>
+    <groupId>io.github.pinotdao</groupId>
+    <artifactId>pinotdao-bundle</artifactId>
+    <version>0.1-SNAPSHOT</version>
+</dependency>
+````
