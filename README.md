@@ -1,9 +1,4 @@
-A rich suite of functional and admin APIs for a Pinot datastore.
-
-## Primary functions:
-- Control plane APIs for creating and updating pinot table, associated schema etc.
-- Data plane APIs for reading and writing to a pinot table without proactive error correction
-- APIs for creating select, aggregation queries in fluent-style with inbuilt syntax validation and sql query creation
+A rich and easy-to-use suite of functional and admin APIs for a Pinot datastore.
 
 ## Functional APIs
 ```
