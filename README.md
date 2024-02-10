@@ -1,6 +1,6 @@
 A rich and easy-to-use suite of functional and admin APIs for a Pinot datastore.
 
-## Why use Entity model in Pinot?
+## Why use Entity model for a Pinot datastore in your Backend App?
 - Pinot uses a relational model, then why not define an entity model at DAO layer to take advantage of all entity level, data type level 
 validations to ensure data is correct on write and correctly parsed into POJOs on read.
 
