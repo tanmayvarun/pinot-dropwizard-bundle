@@ -2,7 +2,7 @@ package io.dropwizard.pinot.repository.pinot;
 
 import io.dropwizard.pinot.healthcheck.configs.exception.QueryErrorCode;
 import io.dropwizard.pinot.healthcheck.configs.exception.QueryProcessingException;
-import io.dropwizard.pinot.models.domainparams.DomainParam;
+import io.dropwizard.pinot.storage.pinot.entities.Column;
 import io.dropwizard.pinot.storage.pinot.entities.PinotTableEntity;
 import io.dropwizard.pinot.storage.pinot.pinotspec.schema.PinotSupportedColumnTypeV1;
 import org.apache.commons.lang3.EnumUtils;
@@ -42,11 +42,10 @@ public class EntityMapperImpl implements EntityMapper {
         Map<String, Object> map = new HashMap<>();
         for (Field field: fields) {
             field.setAccessible(true);
-            Class klass = field.getType();
-            if (DomainParam.class.isAssignableFrom(klass)) {
+            if (field.isAnnotationPresent(Column.class)) {
                 try {
-                    DomainParam domainParam = (DomainParam) field.get(entity);
-                    map.put(Objects.requireNonNull(domainParam.databaseColumnName()), domainParam.getValue());
+                    Column column = field.getAnnotation(Column.class);
+                    map.put(Objects.requireNonNull(column.name()), field.get(entity));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

@@ -1,6 +1,5 @@
 package io.dropwizard.pinot.query.models.filters;
 
-import io.dropwizard.pinot.models.domainparams.DomainParam;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,8 +11,8 @@ public class InFilter extends Filter {
     private final List<String> operands;
 
     @Builder
-    protected InFilter(DomainParam domainParam, List<String> operands) {
-        super(FilterType.IN, domainParam);
+    protected InFilter(String columnName, List<String> operands) {
+        super(FilterType.IN, columnName);
         this.operands = operands;
     }
 
@@ -27,6 +26,6 @@ public class InFilter extends Filter {
             commaSeparatedListBuilder.append("\'").append(operands.get(i)).append("\'");
         }
 
-        return String.format("%s in (%s)", columnName(), commaSeparatedListBuilder.toString());
+        return String.format("%s in (%s)", columnName, commaSeparatedListBuilder.toString());
     }
 }

@@ -1,9 +1,7 @@
 package io.dropwizard.pinot.repository.pinot;
 
-import io.dropwizard.pinot.models.domainparams.DomainParam;
 import io.dropwizard.pinot.models.kafka.kafkaproducer.ProducedMeta;
 import io.dropwizard.pinot.query.models.selection.SelectQuery;
-import io.dropwizard.pinot.storage.pinot.entities.PinotTableEntity;
 import io.dropwizard.pinot.storage.pinot.pinotspec.query.processed.response.SelectionQueryResponse;
 import io.dropwizard.pinot.storage.pinot.pinotspec.query.raw.request.RawQuery;
 
@@ -17,9 +15,8 @@ public interface PinotDao<T> {
 
     Object query(RawQuery query);
 
-    SelectionQueryResponse<T> select(SelectQuery query);
+    SelectionQueryResponse<T> lookup(String tableName, Class entityType,
+                                     String partitionKey, String rowKey);
 
-    SelectionQueryResponse<T> getRowByKey(String tableName, DomainParam partitionKeyParam,
-                                       DomainParam rowKeyParam, Class entityclass);
-
+    SelectionQueryResponse<T> search(SelectQuery query);
 }

@@ -1,6 +1,5 @@
 package io.dropwizard.pinot.query.models.filters;
 
-import io.dropwizard.pinot.models.domainparams.DomainParam;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,13 +9,13 @@ public class EqualsFilter extends Filter {
     private final String value;
 
     @Builder
-    public EqualsFilter(DomainParam domainParam, String value) {
-        super(FilterType.EQUALS, domainParam);
+    public EqualsFilter(String databaseColumnName, String value) {
+        super(FilterType.EQUALS, databaseColumnName);
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return String.format("%s='%s'", columnName(), value);
+        return String.format("%s='%s'", columnName, value);
     }
 }

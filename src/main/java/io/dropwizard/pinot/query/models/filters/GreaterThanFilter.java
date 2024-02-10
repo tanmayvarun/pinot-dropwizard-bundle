@@ -1,18 +1,16 @@
 package io.dropwizard.pinot.query.models.filters;
 
-import io.dropwizard.pinot.models.domainparams.DomainParam;
-
 public class GreaterThanFilter extends Filter {
 
     private String value;
 
-    protected GreaterThanFilter(DomainParam domainParam, String value) {
-        super(FilterType.GREATER_THAN, domainParam);
+    protected GreaterThanFilter(String columnName, String value) {
+        super(FilterType.GREATER_THAN, columnName);
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return String.format("%s > %s", columnName(), value);
+        return String.format("%s > %s", columnName, value);
     }
 }

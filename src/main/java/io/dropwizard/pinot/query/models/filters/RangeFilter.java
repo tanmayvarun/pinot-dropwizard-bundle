@@ -1,6 +1,6 @@
 package io.dropwizard.pinot.query.models.filters;
 
-import io.dropwizard.pinot.models.domainparams.DomainParam;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,8 +13,8 @@ public class RangeFilter<T> extends Filter {
     private boolean includeUpper = false;
 
     @Builder
-    RangeFilter(final DomainParam domainParam, T lowerLimit, T upperLimit, boolean includeLower, boolean includeUpper) {
-        super(FilterType.RANGE, domainParam);
+    RangeFilter(final String columnName, T lowerLimit, T upperLimit, boolean includeLower, boolean includeUpper) {
+        super(FilterType.RANGE, columnName);
         this.lowerLimit = lowerLimit;
         this.upperLimit = upperLimit;
         this.includeLower = includeLower;
@@ -24,6 +24,6 @@ public class RangeFilter<T> extends Filter {
     //todo: fix to string to proper where clause
     @Override
     public String toString() {
-        return String.format("%s_%s_%s", domainParam.databaseColumnName(), lowerLimit, upperLimit);
+        return String.format("%s_%s_%s", columnName, lowerLimit, upperLimit);
     }
 }

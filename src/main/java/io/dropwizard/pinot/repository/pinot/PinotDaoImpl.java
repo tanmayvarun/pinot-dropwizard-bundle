@@ -2,11 +2,8 @@ package io.dropwizard.pinot.repository.pinot;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import io.dropwizard.pinot.cache.PinotTableCache;
 import io.dropwizard.pinot.healthcheck.configs.exception.*;
-import io.dropwizard.pinot.models.domainparams.DomainParam;
 import io.dropwizard.pinot.models.kafka.kafkaproducer.ProducedMeta;
 import io.dropwizard.pinot.TopicService;
 import io.dropwizard.pinot.query.models.Limit;
@@ -17,16 +14,9 @@ import io.dropwizard.pinot.query.models.selection.SelectQuery;
 import io.dropwizard.pinot.repository.pinot.clients.PinotClient;
 import io.dropwizard.pinot.repository.pinot.helper.EntityRegistry;
 import io.dropwizard.pinot.storage.pinot.entities.EntityContext;
-import io.dropwizard.pinot.storage.pinot.entities.PinotTableEntity;
 import io.dropwizard.pinot.storage.pinot.pinotspec.query.processed.response.SelectionQueryResponse;
 import io.dropwizard.pinot.storage.pinot.pinotspec.query.raw.request.RawQuery;
-import io.dropwizard.pinot.storage.pinot.pinotspec.schema.Field;
-import io.dropwizard.pinot.storage.pinot.pinotspec.schema.PinotSupportedColumnTypeV1;
-import io.dropwizard.pinot.storage.pinot.pinotspec.table.PinotSchemaConfig;
-import io.dropwizard.pinot.storage.pinot.pinotspec.table.PinotTableDetails;
-import io.dropwizard.pinot.storage.pinot.pinotspec.table.PinotTableKey;
 import io.dropwizard.pinot.utils.SerDe;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.pinot.client.PinotClientException;
@@ -108,7 +98,7 @@ public class PinotDaoImpl<T> implements PinotDao<T> {
      * @return
      */
     @Override
-    public SelectionQueryResponse<T> select(SelectQuery query) {
+    public SelectionQueryResponse<T> search(SelectQuery query) {
         try {
             ResultSetGroup resultSetGroup = pinotClient.query(query.sql());
 
@@ -141,19 +131,22 @@ public class PinotDaoImpl<T> implements PinotDao<T> {
         }
     }
 
-    public SelectionQueryResponse<T> getRowByKey(String tableName, DomainParam partitionKeyParam,
-                                                      DomainParam rowKeyParam, Class klass) {
-        return select(SelectQuery.builder()
+    @Override
+    public SelectionQueryResponse<T> lookup(String tableName, Class entityType,
+                                            String partitionKey, String rowKey) {
+        return search(SelectQuery.builder()
                 .tableNameClause(TableNameClause.builder().tableName(tableName).build())
-                .entityClass(klass)
+                .entityClass(entityType)
                 .limit(Limit.builder().limit(1).build())
                 .whereClause(WhereClause.builder()
                         .filters(Lists.newArrayList(
                                 EqualsFilter.builder()
-                                        .domainParam(partitionKeyParam)
+                                        .databaseColumnName(entityRegistry.checkEntityInRegistry(entityType).getPartitionKeyColumn())
+                                        .value(partitionKey)
                                         .build(),
                                 EqualsFilter.builder()
-                                        .domainParam(rowKeyParam)
+                                        .databaseColumnName(entityRegistry.checkEntityInRegistry(entityType).getUniqueKeyColumn())
+                                        .value(rowKey)
                                         .build()
                         ))
                         .build())
