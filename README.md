@@ -7,7 +7,6 @@ validations to ensure data is correct on write and correctly parsed into POJOs o
 
 - Unlike the relational world, where an invalid row write is instantly rejected by the database, Pinot writes are not sync, they use kafka, so if the row your service is ingesting is invalid, you will not instantly learn it,
 hence validation becomes even more necessary, which is achieving by defining entity model.
->>>>>>> 335a1f9 (Start with Why)
 
 ## Functional APIs
 ```
