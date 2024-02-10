@@ -40,5 +40,4 @@ public interface PinotAdminDao {
     Long getTableDataRetentionInDays(String tableId, TableType tableType);
 
     Map<String, List<String>> tagServers(RealtimeServerTaggingRequest realtimeServerTaggingRequest);
-
 }

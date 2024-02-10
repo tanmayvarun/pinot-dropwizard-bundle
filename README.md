@@ -5,6 +5,56 @@ A rich suite of functional and admin APIs for a Pinot datastore.
 - Data plane APIs for reading and writing to a pinot table without proactive error correction
 - APIs for creating select, aggregation queries in fluent-style with inbuilt syntax validation and sql query creation
 
+## Functional APIs
+```
+public interface PinotDao<T> {
+
+    ProducedMeta ingestRowSync(String topicName, T entity);
+
+    CompletableFuture<ProducedMeta> ingestRow(String topicName, T entity);
+
+    Object query(RawQuery query);
+
+    SelectionQueryResponse<T> select(SelectQuery query);
+
+    SelectionQueryResponse<T> getRowByKey(String tableName, DomainParam partitionKeyParam,
+                                       DomainParam rowKeyParam, Class entityclass);
+
+}
+```
+
+## Admin APIs
+```
+public interface PinotAdminDao {
+
+    Health ping();
+
+    Set<String> getAllTopics();
+
+    Topic getTopic(String topicName);
+
+    void validateTopicExists(String topic);
+
+    PinotSchemaConfig createSchema(PinotSchemaConfig schemaConfig);
+
+    TableConfig createTable(TableConfig tableConfig);
+
+    Object validateSchemaConfig(PinotSchemaConfig schemaConfig);
+
+    Object validateTableConfig(TableConfig tableConfig);
+
+    PinotSchemaConfig getSchema(String schemaName);
+
+    Optional<PinotSchemaConfig> getSchemaSilently(String schemaName);
+
+    TableConfig getTableConfig(String tableId, TableType tableType);
+
+    Long getTableDataRetentionInDays(String tableId, TableType tableType);
+
+    Map<String, List<String>> tagServers(RealtimeServerTaggingRequest realtimeServerTaggingRequest);
+}
+```
+
 ## Defining an Entity
 
 ### Annotations
