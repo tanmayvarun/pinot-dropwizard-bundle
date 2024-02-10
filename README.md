@@ -18,11 +18,10 @@ public interface PinotDao<T> {
 
     Object query(RawQuery query);
 
-    SelectionQueryResponse<T> select(SelectQuery query);
+    SelectionQueryResponse<T> lookup(String tableName, Class entityType,
+                                     String partitionKey, String rowKey);
 
-    SelectionQueryResponse<T> getRowByKey(String tableName, DomainParam partitionKeyParam,
-                                       DomainParam rowKeyParam, Class entityclass);
-
+    SelectionQueryResponse<T> search(SelectQuery query);
 }
 ```
 
